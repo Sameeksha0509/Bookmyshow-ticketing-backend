@@ -43,8 +43,6 @@ For local development without Dockerized API, install `requirements.txt` and set
 - `sql/02_seed.sql`: sample users, theatres, screens, seats, movies, shows, and inventory.
 - `sql/03_queries.sql`: P2 shows query, seven-day date-picker query, and seat map query.
 - `docs/solution.md`: entities, sample rows, normalization, concurrency invariants, design trade-offs, and limitations.
-- `docs/submission-report.pdf`: formatted submission report with schema overview, sample rows, normalization, P1/P2 SQL, and verification status.
-- `docs/submission-report.html`: editable source used to generate the PDF report.
 - `tests/concurrency_test.py`: HTTP burst, seat exclusivity, hold idempotency, and duplicate webhook integration test.
 
 ## Concurrency model
