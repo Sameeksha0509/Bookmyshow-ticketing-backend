@@ -384,8 +384,24 @@ FROM shows sh JOIN seats se ON se.screen_id=sh.screen_id;</pre>
 <tr><td>Duplicate provider event</td><td>Accept retry without duplicate state changes</td><td>Test implemented; execution not verified.</td></tr>
 </tbody></table>
 <h3>Screenshots to add after running locally</h3>
-<ol><li>Workbench P2 query and populated showtime result grid.</li><li>Seven-day date-picker query and results.</li><li>Optional seat map and SHOW TABLES/sample rows.</li><li>Terminal output from the passing concurrency/webhook integration test.</li></ol>
-<div class="callout">No execution screenshots were embedded because the attached conversation images did not provide local image files, and the database/API test run has not been completed. Add your actual Workbench and test screenshots to the final PDF before submission; do not label expected sample output as observed test evidence.</div>
+<p>The following Workbench evidence images were supplied in the repository README and are reproduced here. They illustrate the show list, date picker, seat selection, and table list.</p>
+<div style="page-break-before: always">
+<h3>Evidence 1 — Scheduled shows</h3>
+<img src="https://github.com/user-attachments/assets/47947ff1-82b7-432d-8ab1-4d44582ea7e7" alt="Scheduled show query screenshot" style="width:100%;height:auto;border:1px solid #cbd5e1">
+</div>
+<div style="page-break-before: always">
+<h3>Evidence 2 — Seven-day date picker</h3>
+<img src="https://github.com/user-attachments/assets/8ef84646-0de6-4b20-92cb-568945710ee4" alt="Date picker query screenshot" style="width:100%;height:auto;border:1px solid #cbd5e1">
+</div>
+<div style="page-break-before: always">
+<h3>Evidence 3 — Seat selection</h3>
+<img src="https://github.com/user-attachments/assets/13003e51-acfd-40bf-885c-73ad9e6898e8" alt="Seat selection query screenshot" style="width:100%;height:auto;border:1px solid #cbd5e1">
+</div>
+<div style="page-break-before: always">
+<h3>Evidence 4 — Database tables</h3>
+<img src="https://github.com/user-attachments/assets/35bbc907-8c45-4b85-8e4b-c07b907c7ea0" alt="MySQL table list screenshot" style="width:100%;height:auto;border:1px solid #cbd5e1">
+</div>
+<div class="callout">The screenshots above are repository-supplied Workbench images. They are not evidence that the concurrency/webhook integration test passed. Docker Desktop could not start because virtualization support was unavailable, so that test remains unverified and must be run before claiming it passed.</div>
 <p><b>Repository PR:</b> https://github.com/Sameeksha0509/Bookmyshow-ticketing-backend/compare/main...submission/high-concurrency-booking-engine?expand=1</p>
 <p><b>Local run:</b> Start Docker Desktop with virtualization enabled; then run <code>docker compose up --build -d</code>, install <code>tests/requirements.txt</code>, and run <code>python tests/concurrency_test.py</code>.</p>
 </div>
