@@ -1,0 +1,61 @@
+services:
+  redis:
+    image: redis:7.4-alpine
+    container_name: booking-engine-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  db:
+    image: mysql:8.4
+    container_name: booking-engine-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: booking_engine
+      MYSQL_USER: booking_app
+      MYSQL_PASSWORD: booking_app_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./sql/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ubooking_app", "-pbooking_app_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: booking_engine
+      MYSQL_USER: booking_app
+      MYSQL_PASSWORD: booking_app_password
+      REDIS_URL: redis://redis:6379/0
+      HOLD_TTL_SECONDS: 600
+      QUEUE_WORKERS: ${QUEUE_WORKERS:-4}
+      PAYMENT_WEBHOOK_SECRET: ${PAYMENT_WEBHOOK_SECRET:-}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
+  redis_data:
